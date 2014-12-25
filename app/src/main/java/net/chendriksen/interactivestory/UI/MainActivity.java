@@ -1,21 +1,19 @@
-package net.chendriksen.interactivestory;
+package net.chendriksen.interactivestory.UI;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import net.chendriksen.interactivestory.R;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private EditText mNameField;
     private Button mStartButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +27,22 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 String name = mNameField.getText().toString();
-                startStory();
+                startStory(name);
             }
         });
     }
 
-    private void startStory() {
+    private void startStory(String name) {
         Intent intent = new Intent(this, StoryActivity.class);
+        intent.putExtra(getString(R.string.key_name), name);
         startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mNameField.setText("");
+    }
 }
 
 
